@@ -15,9 +15,9 @@ for i in range(3,amount+3):
     question = sys.argv[i]
     questions.append(question)
 
-# Load model
+# Load model and vectorizer
 filename = course_name + '.sav'
-clf = pickle.load(open(filename, 'rb'))
+clf,count_vect = pickle.load(open(filename, 'rb'))
 
 # Data Preparation
 def preprocess(sentence,language):
@@ -25,22 +25,20 @@ def preprocess(sentence,language):
     tokens = nltk.word_tokenize(sentence)
     stop_words = stopwords.words(language)
     tokens = [w for w in tokens if not w in stop_words and w.isalpha()]
-    if(language == 'en'):
-        stemmer = SnowballStemmer("english")
-        tokens = [stemmer.stem(word) for word in tokens]
-    elif(language == 'tr'):
+    if(language == 'turkish'):
         stemmer = TurkishStemmer()
         tokens = [stemmer.stemWord(word) for word in tokens]
+    else:
+        stemmer = SnowballStemmer(language)
+        tokens = [stemmer.stem(word) for word in tokens]
     return ' '.join(tokens)
 
-X = [preprocess(text,language) for text in questions]
+questions = [preprocess(text,language) for text in questions]
 
 # Prediction
-count_vect = CountVectorizer()
 predictions = []
 for sentence in questions:
-    sentence_proc = preprocess(sentence,language)
-    sentence_counts = count_vect.transform([sentence_proc])
+    sentence_counts = count_vect.transform([sentence])
     prediction = clf.predict(sentence_counts)
     predictions.append(prediction[0])
 predictions = '|'.join(predictions)

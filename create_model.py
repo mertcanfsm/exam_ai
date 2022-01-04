@@ -24,12 +24,12 @@ def preprocess(sentence,language):
     tokens = nltk.word_tokenize(sentence)
     stop_words = stopwords.words(language)
     tokens = [w for w in tokens if not w in stop_words and w.isalpha()]
-    if(language == 'en'):
-        stemmer = SnowballStemmer("english")
-        tokens = [stemmer.stem(word) for word in tokens]
-    elif(language == 'tr'):
+    if(language == 'turkish'):
         stemmer = TurkishStemmer()
         tokens = [stemmer.stemWord(word) for word in tokens]
+    else:
+        stemmer = SnowballStemmer(language)
+        tokens = [stemmer.stem(word) for word in tokens]
     return ' '.join(tokens)
 
 X = [preprocess(text,language) for text in questions]
@@ -46,6 +46,6 @@ X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
 
 clf = MultinomialNB().fit(X_train_tfidf, y_train)
 
-# Store model
+# Store model and vectorizer
 filename = course_name + '.sav'
-pickle.dump(clf, open(filename, 'wb'))
+pickle.dump((clf,count_vect), open(filename, 'wb'))
