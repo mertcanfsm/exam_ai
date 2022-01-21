@@ -8,13 +8,17 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 import pickle
 
+# Install NLTK dependencies
+nltk.download('stopwords')
+nltk.download('punkt')
+
 # Read input data
-course_name = sys.argv[0]
-language = sys.argv[1]
-y = sys.argv[2].split('|')
-amount = sys.argv[3]
+course_name = sys.argv[1]
+language = sys.argv[2]
+y = sys.argv[3].split('|')
+amount = int(sys.argv[4])
 questions = []
-for i in range(4,amount+4):
+for i in range(5,amount+5):
     question = sys.argv[i]
     questions.append(question)
 

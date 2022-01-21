@@ -6,12 +6,16 @@ from snowballstemmer import TurkishStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 import pickle
 
+# Install NLTK dependencies
+nltk.download('stopwords')
+nltk.download('punkt')
+
 # Read input data
-course_name = sys.argv[0]
-language = sys.argv[1]
-amount = sys.argv[2]
+course_name = sys.argv[1]
+language = sys.argv[2]
+amount = int(sys.argv[3])
 questions = []
-for i in range(3,amount+3):
+for i in range(4,amount+4):
     question = sys.argv[i]
     questions.append(question)
 
