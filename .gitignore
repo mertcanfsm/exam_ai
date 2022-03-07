@@ -1,1 +1,5 @@
+__pycache__
 *.bin
+*.pkl
+word2vec_small
+word2vec_big
