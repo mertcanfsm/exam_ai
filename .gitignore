@@ -1,5 +1,8 @@
+logs
+.ipynb_checkpoints
 __pycache__
 *.bin
 *.pkl
+*.sav
 word2vec_small
 word2vec_big
